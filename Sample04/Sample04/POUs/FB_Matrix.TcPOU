@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4019.2">
+  <POU Name="FB_Matrix" Id="{f293906e-c654-4c24-8fbc-10dfeca55611}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Matrix
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Multiplication" Id="{0bd670ac-7b4b-43b0-86ad-69f18a815d16}">
+      <Declaration><![CDATA[METHOD PUBLIC Multiplication : BOOL
+VAR_IN_OUT
+	arrayA 			: ARRAY[*, *] OF DINT;
+	arrayB 			: ARRAY[*, *] OF DINT;
+	arrayX 			: ARRAY[*, *] OF DINT;	
+END_VAR
+VAR
+	nIndex1, nIndex2, nIndex3, nIndex4	: DINT;
+END_VAR;
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR nIndex1 := LOWER_BOUND(arrayA, 1) TO UPPER_BOUND(arrayA, 1) DO
+	FOR nIndex2 := LOWER_BOUND(arrayB, 2) TO UPPER_BOUND(arrayB, 2) DO
+		nIndex4 := 0;
+		FOR nIndex3 := LOWER_BOUND(arrayA, 2) TO UPPER_BOUND(arrayA, 2) DO
+			nIndex4 := nIndex4 + arrayA[nIndex1, nIndex3] * arrayB[nIndex3, nIndex2];
+		END_FOR;
+		arrayX[nIndex1, nIndex2] := nIndex4;
+	END_FOR;
+END_FOR;
+]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>
